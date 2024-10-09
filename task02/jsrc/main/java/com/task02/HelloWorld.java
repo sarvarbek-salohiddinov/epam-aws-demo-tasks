@@ -24,68 +24,48 @@ import java.util.Map;
 public class HelloWorld implements RequestHandler<Object, Map<String, Object>> {
 
 	public Map<String, Object> handleRequest(Object request, Context context) {
-//		Map<String, Object> resultMap = new HashMap<>();
-//
-//		System.out.println("Received request: " + request.toString());
-//
-//		@SuppressWarnings("unchecked")
-//		Map<String, Object> requestMap = (Map<String, Object>) request;
-//
-//		String path = (String) requestMap.get("rawPath");
-//		String method = (String) requestMap.get("httpMethod");
-//
-//		if ("/hello".equals(path) && "GET".equalsIgnoreCase(method)) {
-//			resultMap.put("statusCode", 200);
-//			resultMap.put("message", "Hello from Lambda");
-//		} else {
-//			resultMap.put("statusCode", 400);
-//			resultMap.put("message", String.format(
-//					"Bad request syntax or unsupported method. Request path: %s. HTTP method: %s", path, method));
-//		}
-//
-//		return resultMap;
-
-		Map<String, Object> parsedMap = parseObjectToMap(request);
-
-		// Print the parsed Map
-		System.out.println(request);
-		System.out.println("================================================");
-		System.out.println(parsedMap);
-		System.out.println("================================================");
-		System.out.println(parsedMap.get("requestContext"));
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap.put("statusCode", 200);
-//		resultMap.put("message", "Hello from Lambda");
-		resultMap.put("message", request);
-		return resultMap;
-	}
 
 
-	public static Map<String, Object> parseObjectToMap(Object request) {
-		String requestString = request.toString();
 		Map<String, Object> resultMap = new HashMap<>();
-		parseKeyValuePairs(requestString, resultMap);
+
+		try {
+			// Cast the incoming Object to a Map
+			@SuppressWarnings("unchecked")
+			Map<String, Object> requestMap = (Map<String, Object>) request;
+
+			// Extract rawPath and method from requestContext
+			String rawPath = (String) requestMap.get("rawPath");
+			@SuppressWarnings("unchecked")
+			Map<String, Object> requestContext = (Map<String, Object>) requestMap.get("requestContext");
+
+			@SuppressWarnings("unchecked")
+			Map<String, Object> httpContext = (Map<String, Object>) requestContext.get("http");
+			String method = (String) httpContext.get("method");
+
+			// Check if the path is /hello and method is GET
+			if ("/hello".equals(rawPath) && "GET".equalsIgnoreCase(method)) {
+				resultMap.put("statusCode", 200);
+				resultMap.put("message", "Hello from Lambda");
+			} else {
+				// Return 400 error for all other paths or methods
+				resultMap.put("statusCode", 400);
+				resultMap.put("message", String.format(
+						"Bad request syntax or unsupported method. Request path: %s. HTTP method: %s", rawPath, method));
+			}
+			System.out.println(resultMap);
+			System.out.println("=======================================");
+			System.out.println("requestContext::   " + requestContext);
+			System.out.println("=======================================");
+			System.out.println("method::   " + method);
+			System.out.println("=======================================");
+		} catch (Exception e) {
+			// Handle any unexpected errors in processing
+			resultMap.put("statusCode", 500);
+			resultMap.put("message", "Internal Server Error: " + e.getMessage());
+		}
+
+
 
 		return resultMap;
-	}
-
-	private static void parseKeyValuePairs(String input, Map<String, Object> resultMap) {
-		input = input.replaceAll("[{}]", "");
-		String[] pairs = input.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)"); // Comma outside quotes
-
-		for (String pair : pairs) {
-			String[] keyValue = pair.split("=", 2); // Split only at the first '='
-
-			if (keyValue.length == 2) {
-				String key = keyValue[0].trim();
-				String value = keyValue[1].trim();
-				if (value.startsWith("{") && value.endsWith("}")) {
-					Map<String, Object> nestedMap = new HashMap<>();
-					parseKeyValuePairs(value, nestedMap);
-					resultMap.put(key, nestedMap);
-				} else resultMap.put(key, value);
-
-			}
-		}
 	}
 }
