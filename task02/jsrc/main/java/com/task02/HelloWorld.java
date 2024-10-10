@@ -8,7 +8,6 @@ import com.syndicate.deployment.model.RetentionSetting;
 import com.syndicate.deployment.model.lambda.url.AuthType;
 import com.syndicate.deployment.model.lambda.url.InvokeMode;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -39,33 +38,17 @@ public class HelloWorld implements RequestHandler<Object, Map<String, Object>> {
             String method = (String) httpContext.get("method");
 
             if ("/hello".equals(rawPath) && "GET".equalsIgnoreCase(method)) {
-//                Map<String, Object> respBody = new HashMap<>();
-//                resultMap.put("statusCode", 200);
-//                resultMap.put("message", "Hello from Lambda");
                 resultMap.put("statusCode", 200);
                 resultMap.put("body", "{\"statusCode\": 200, \"message\": \"Hello from Lambda\"}");
-//                resultMap.put("body", respBody);
             } else {
-//                Map<String, Object> respBody = new HashMap<>();
                 resultMap.put("statusCode", 400);
                 resultMap.put("body", "{\"statusCode\": 400, \"message\": \"" + String.format(
                         "Bad request syntax or unsupported method. Request path: %s. HTTP method: %s", rawPath, method) + "\"}");
-//                resultMap.put("body", respBody);
-
             }
-            System.out.println(resultMap);
-            System.out.println("=======================================");
-            System.out.println("requestContext::   " + requestContext);
-            System.out.println("=======================================");
-            System.out.println("method::   " + method);
-            System.out.println("=======================================");
         } catch (Exception e) {
-//            Map<String, Object> respBody = new HashMap<>();
             resultMap.put("statusCode", 500);
             resultMap.put("body", "{\"statusCode\": 500, message\": {Internal Server Error: " + e.getMessage() + "\"}");
-//            resultMap.put("body", respBody);
         }
-
         return resultMap;
     }
 }
