@@ -38,12 +38,12 @@ public class HelloWorld implements RequestHandler<Object, Map<String, Object>> {
 			String method = (String) httpContext.get("method");
 
 			if ("/hello".equals(rawPath) && "GET".equalsIgnoreCase(method)) {
-				resultMap.put("\"statusCode\"", 200);
-				resultMap.put("\"message\"", "\"Hello from Lambda\"");
+				resultMap.put("statusCode", 200);
+				resultMap.put("message", "Hello from Lambda");
 			} else {
-				resultMap.put("\"statusCode\"", 400);
-				resultMap.put("\"message\"", String.format(
-						"\"Bad request syntax or unsupported method. Request path: %s. HTTP method: %s\"", rawPath, method));
+				resultMap.put("statusCode", 400);
+				resultMap.put("message", String.format(
+						"Bad request syntax or unsupported method. Request path: %s. HTTP method: %s", rawPath, method));
 			}
 			System.out.println(resultMap);
 			System.out.println("=======================================");
@@ -52,8 +52,8 @@ public class HelloWorld implements RequestHandler<Object, Map<String, Object>> {
 			System.out.println("method::   " + method);
 			System.out.println("=======================================");
 		} catch (Exception e) {
-			resultMap.put("\"statusCode\"", 500);
-			resultMap.put("\"message\"", "\"Internal Server Error: " + e.getMessage() + "\"");
+			resultMap.put("statusCode", 500);
+			resultMap.put("message", "Internal Server Error: " + e.getMessage());
 		}
 
 		return resultMap;

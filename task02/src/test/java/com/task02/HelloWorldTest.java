@@ -43,8 +43,8 @@ class HelloWorldTest {
         System.out.println("result:   " + result);
         System.out.println("================================================================");
 
-        assertEquals(200, result.get("\"statusCode\""));
-        assertEquals("\"Hello from Lambda\"", result.get("\"message\""));
+        assertEquals(200, result.get("statusCode"));
+        assertEquals("Hello from Lambda", result.get("message"));
     }
 
     @Test()
@@ -61,8 +61,8 @@ class HelloWorldTest {
         requestMap.put("requestContext", requestContext);
         Map<String, Object> result = helloWorld.handleRequest(requestMap, context);
 
-        assertEquals(400, result.get("\"statusCode\""));
-        assertEquals("\"Bad request syntax or unsupported method. Request path: /invalid. HTTP method: GET\"", result.get("\"message\""));
+        assertEquals(400, result.get("statusCode"));
+        assertEquals("Bad request syntax or unsupported method. Request path: /invalid. HTTP method: GET", result.get("message"));
     }
 
     @Test
@@ -79,8 +79,8 @@ class HelloWorldTest {
         requestMap.put("requestContext", requestContext);
         Map<String, Object> result = helloWorld.handleRequest(requestMap, context);
 
-        assertEquals(400, result.get("\"statusCode\""));
-        assertEquals("\"Bad request syntax or unsupported method. Request path: /hello. HTTP method: POST\"", result.get("\"message\""));
+        assertEquals(400, result.get("statusCode"));
+        assertEquals("Bad request syntax or unsupported method. Request path: /hello. HTTP method: POST", result.get("message"));
     }
 
     @Test
@@ -88,7 +88,7 @@ class HelloWorldTest {
         Map<String, Object> invalidRequest = new HashMap<>();
         Map<String, Object> result = helloWorld.handleRequest(invalidRequest, context);
 
-        assertEquals(500, result.get("\"statusCode\""));
-        assertEquals(true, ((String) result.get("\"message\"")).contains("\"Internal Server Error"));
+        assertEquals(500, result.get("statusCode"));
+        assertEquals(true, ((String) result.get("message")).contains("Internal Server Error"));
     }
 }
