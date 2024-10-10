@@ -24,7 +24,7 @@ import java.util.Map;
         invokeMode = InvokeMode.BUFFERED)
 public class HelloWorld implements RequestHandler<Object, Map<String, Object>> {
     public Map<String, Object> handleRequest(Object request, Context context) {
-        Map<String, Object> resultMap = new HashMap<>();
+        Map<String, Object> resultMap = new LinkedHashMap<>();
 
         try {
             @SuppressWarnings("unchecked")
@@ -39,16 +39,16 @@ public class HelloWorld implements RequestHandler<Object, Map<String, Object>> {
             String method = (String) httpContext.get("method");
 
             if ("/hello".equals(rawPath) && "GET".equalsIgnoreCase(method)) {
-                Map<String, Object> respBody = new HashMap<>();
-                respBody.put("statusCode", 200);
-                respBody.put("message", "Hello from Lambda");
-                resultMap.put("body", respBody);
+//                Map<String, Object> respBody = new HashMap<>();
+                resultMap.put("statusCode", 200);
+                resultMap.put("message", "Hello from Lambda");
+//                resultMap.put("body", respBody);
             } else {
-                Map<String, Object> respBody = new HashMap<>();
-                respBody.put("statusCode", 400);
-                respBody.put("message", String.format(
+//                Map<String, Object> respBody = new HashMap<>();
+                resultMap.put("statusCode", 400);
+                resultMap.put("message", String.format(
                         "Bad request syntax or unsupported method. Request path: %s. HTTP method: %s", rawPath, method));
-                resultMap.put("body", respBody);
+//                resultMap.put("body", respBody);
 
             }
             System.out.println(resultMap);
@@ -58,10 +58,10 @@ public class HelloWorld implements RequestHandler<Object, Map<String, Object>> {
             System.out.println("method::   " + method);
             System.out.println("=======================================");
         } catch (Exception e) {
-            Map<String, Object> respBody = new HashMap<>();
-            respBody.put("statusCode", 500);
-            respBody.put("message", "Internal Server Error: " + e.getMessage());
-            resultMap.put("body", respBody);
+//            Map<String, Object> respBody = new HashMap<>();
+            resultMap.put("statusCode", 500);
+            resultMap.put("message", "Internal Server Error: " + e.getMessage());
+//            resultMap.put("body", respBody);
         }
 
         return resultMap;
