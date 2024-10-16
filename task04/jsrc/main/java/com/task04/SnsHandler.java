@@ -40,7 +40,8 @@ public class SnsHandler implements RequestHandler<Object, Map<String, Object>> {
 			context.getLogger().log("Invalid event format: Expected a Map but received " + request.getClass().getName());
 		}
 
-		return Map.of("status", "success", "message", "SNS message processed successfully");
-
+		Map<String, Object> result = Map.of("status", "success", "message", "SNS message processed successfully");
+		System.out.println(result);
+		return result;
 	}
 }

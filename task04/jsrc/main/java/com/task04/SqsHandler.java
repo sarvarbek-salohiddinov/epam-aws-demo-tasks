@@ -42,6 +42,7 @@ public class SqsHandler implements RequestHandler<Object, Map<String, Object>> {
 			context.getLogger().log("Invalid event format: Expected a Map but received " + request.getClass().getName());
 			resultMap = Map.of("status", "error", "message", "Invalid event format");
 		}
+		System.out.println(resultMap);
 
 		return resultMap;
 

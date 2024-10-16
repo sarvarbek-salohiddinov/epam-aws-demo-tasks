@@ -1,14 +1,14 @@
 {
-  "sqs_handler" : {
-    "name" : "sqs_handler",
+  "sns_handler" : {
+    "name" : "sns_handler",
     "lambda_path" : "/Users/8ar7ar/Base/Docs/myEPAMdocs/Tasks/EPAM-AWS/epam-aws-demo-tasks/task04",
     "version" : "1.0.0",
-    "func_name" : "com.task04.SqsHandler",
+    "func_name" : "com.task04.SnsHandler",
     "deployment_package" : "task04-1.0.0.jar",
     "resource_type" : "lambda",
     "runtime" : "java11",
     "architectures" : [ "x86_64" ],
-    "iam_role_name" : "sqs_handler-role",
+    "iam_role_name" : "sns_handler-role",
     "memory" : 1024,
     "timeout" : 300,
     "subnet_ids" : [ ],
@@ -22,16 +22,16 @@
     "logs_expiration" : "${logs_expiration}",
     "snap_start" : "None"
   },
-  "sns_handler" : {
-    "name" : "sns_handler",
+  "sqs_handler" : {
+    "name" : "sqs_handler",
     "lambda_path" : "/Users/8ar7ar/Base/Docs/myEPAMdocs/Tasks/EPAM-AWS/epam-aws-demo-tasks/task04",
     "version" : "1.0.0",
-    "func_name" : "com.task04.SnsHandler",
+    "func_name" : "com.task04.SqsHandler",
     "deployment_package" : "task04-1.0.0.jar",
     "resource_type" : "lambda",
     "runtime" : "java11",
     "architectures" : [ "x86_64" ],
-    "iam_role_name" : "sns_handler-role",
+    "iam_role_name" : "sqs_handler-role",
     "memory" : 1024,
     "timeout" : 300,
     "subnet_ids" : [ ],
