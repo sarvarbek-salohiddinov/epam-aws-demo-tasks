@@ -38,14 +38,6 @@
     "resource_type": "api_gateway",
     "deploy_stage": "api",
     "dependencies": [],
-    "resources": {},
-    "minimum_compression_size": 0,
-    "tags": {}
-  },
-  "task03": {
-    "resource_type": "api_gateway",
-    "deploy_stage": "api",
-    "dependencies": [],
     "resources": {
       "/hello": {
         "enable_cors": false,
