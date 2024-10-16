@@ -30,7 +30,6 @@ public class SqsHandler implements RequestHandler<Object, Map<String, Object>> {
 				List<Map<String, Object>> records = (List<Map<String, Object>>) event.get("Records");
 
 				for (Map<String, Object> record : records) {
-					// Extract the body of the SQS message
 					String message = (String) record.get("body");
 
 					context.getLogger().log("Received SQS message: " + message);
