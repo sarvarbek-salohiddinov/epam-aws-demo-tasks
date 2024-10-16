@@ -1,0 +1,49 @@
+{version=2.0,
+  routeKey=$default,
+  rawPath=/,
+  rawQueryString=,
+  headers=
+  {sec-fetch-mode=navigate,
+  x-amzn-tls-version=TLSv1.3,
+  sec-fetch-site=cross-site,
+  x-forwarded-proto=https,
+  accept-language=en-US,
+  en;q=0.9,ru-RU;q=0.8,
+  ru;q=0.7,uz;q=0.6,
+  x-forwarded-port=443,
+  x-forwarded-for=90.156.163.49,
+  sec-fetch-user=?1,
+  accept=text/html,
+  application/xhtml+xml,
+  application/xml;q=0.9,
+  image/avif,image/webp,
+  image/apng,*/*;q=0.8,
+  application/signed-exchange;
+  v=b3;q=0.7,
+  x-amzn-tls-cipher-suite=TLS_AES_128_GCM_SHA256,
+  sec-ch-ua="Google Chrome";
+  v="129", "Not=A?Brand";
+  v="8", "Chromium";
+  v="129",
+  x-amzn-trace-id=Root=1-6706dabf-03bc0bb814506c9609e0b128,
+  sec-ch-ua-mobile=?0,
+  sec-ch-ua-platform="macOS",
+  host=lgaunboep6nsdsioqczz6ximza0oduvz.lambda-url.eu-central-1.on.aws,
+  upgrade-insecure-requests=1, accept-encoding=gzip, deflate, br, zstd,
+  user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36,
+  sec-fetch-dest=document},
+
+requestContext={
+accountId=anonymous,
+apiId=lgaunboep6nsdsioqczz6ximza0oduvz,
+domainName=lgaunboep6nsdsioqczz6ximza0oduvz.lambda-url.eu-central-1.on.aws,
+domainPrefix=lgaunboep6nsdsioqczz6ximza0oduvz,
+http={
+method=GET,
+path=/,
+protocol=HTTP/1.1,
+sourceIp=90.156.163.49,
+userAgent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36},
+requestId=4316da79-5230-4e74-9046-629b5a3f628e,
+routeKey=$default,
+stage=$default, time=09/Oct/2024:19:34:23 +0000, timeEpoch=1728502463660}, isBase64Encoded=false}
