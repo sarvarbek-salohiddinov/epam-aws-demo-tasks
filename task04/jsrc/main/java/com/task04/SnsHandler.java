@@ -14,19 +14,16 @@ import java.util.List;
 import java.util.Map;
 
 @SnsEventSource(
-		targetTopic = "lambda_topic"
-)
+		targetTopic = "lambda_topic")
 @DependsOn(
 		name = "lambda_topic",
-		resourceType = ResourceType.SNS_TOPIC
-)
+		resourceType = ResourceType.SNS_TOPIC)
 @LambdaHandler(
-    lambdaName = "sns_handler",
-	roleName = "sns_handler-role",
-	isPublishVersion = true,
-	aliasName = "learn",
-	logsExpiration = RetentionSetting.SYNDICATE_ALIASES_SPECIFIED
-)
+		lambdaName = "sns_handler",
+		roleName = "sns_handler-role",
+		isPublishVersion = true,
+		aliasName = "learn",
+		logsExpiration = RetentionSetting.SYNDICATE_ALIASES_SPECIFIED)
 public class SnsHandler implements RequestHandler<Object, Map<String, Object>> {
 	public Map<String, Object> handleRequest(Object request, Context context) {
 		LambdaLogger logger = context.getLogger();
@@ -37,31 +34,4 @@ public class SnsHandler implements RequestHandler<Object, Map<String, Object>> {
 		resultMap.put("body", "Hello from Lambda");
 		return resultMap;
 	}
-
-//	public Map<String, Object> handleRequest(Object request, Context context) {
-//		context.getLogger().log("SNS Handler invoked");
-//
-//		if (request instanceof Map) {
-//			Map<String, Object> event = (Map<String, Object>) request;
-//
-//			if (event.containsKey("Records")) {
-//				List<Map<String, Object>> records = (List<Map<String, Object>>) event.get("Records");
-//
-//				for (Map<String, Object> record : records) {
-//					Map<String, Object> sns = (Map<String, Object>) record.get("Sns");
-//					String message = (String) sns.get("Message");
-//
-//					context.getLogger().log("Received SNS message: " + message);
-//				}
-//			} else {
-//				context.getLogger().log("No SNS Records found in the event.");
-//			}
-//		} else {
-//			context.getLogger().log("Invalid event format: Expected a Map but received " + request.getClass().getName());
-//		}
-//
-//		Map<String, Object> result = Map.of("status", "success", "message", "SNS message processed successfully");
-//		System.out.println(result);
-//		return result;
-//	}
 }
