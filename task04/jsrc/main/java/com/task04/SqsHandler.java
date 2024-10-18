@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SqsTriggerEventSource(targetQueue = "async_queue",
-					   batchSize = 10)
+					   batchSize = 1)
 @DependsOn(name = "async_queue",
 		   resourceType = ResourceType.SQS_QUEUE)
 @LambdaHandler(lambdaName = "sqs_handler",
