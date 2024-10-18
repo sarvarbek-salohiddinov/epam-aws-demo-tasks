@@ -1,14 +1,25 @@
 package com.task04;
 
 import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.syndicate.deployment.annotations.events.SnsEventSource;
 import com.syndicate.deployment.annotations.lambda.LambdaHandler;
+import com.syndicate.deployment.annotations.resources.DependsOn;
+import com.syndicate.deployment.model.ResourceType;
 import com.syndicate.deployment.model.RetentionSetting;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@SnsEventSource(
+		targetTopic = "lambda_topic"
+)
+@DependsOn(
+		name = "lambda_topic",
+		resourceType = ResourceType.SNS_TOPIC
+)
 @LambdaHandler(
     lambdaName = "sns_handler",
 	roleName = "sns_handler-role",
@@ -17,31 +28,40 @@ import java.util.Map;
 	logsExpiration = RetentionSetting.SYNDICATE_ALIASES_SPECIFIED
 )
 public class SnsHandler implements RequestHandler<Object, Map<String, Object>> {
-
 	public Map<String, Object> handleRequest(Object request, Context context) {
-		context.getLogger().log("SNS Handler invoked");
-
-		if (request instanceof Map) {
-			Map<String, Object> event = (Map<String, Object>) request;
-
-			if (event.containsKey("Records")) {
-				List<Map<String, Object>> records = (List<Map<String, Object>>) event.get("Records");
-
-				for (Map<String, Object> record : records) {
-					Map<String, Object> sns = (Map<String, Object>) record.get("Sns");
-					String message = (String) sns.get("Message");
-
-					context.getLogger().log("Received SNS message: " + message);
-				}
-			} else {
-				context.getLogger().log("No SNS Records found in the event.");
-			}
-		} else {
-			context.getLogger().log("Invalid event format: Expected a Map but received " + request.getClass().getName());
-		}
-
-		Map<String, Object> result = Map.of("status", "success", "message", "SNS message processed successfully");
-		System.out.println(result);
-		return result;
+		LambdaLogger logger = context.getLogger();
+		logger.log(request.toString());
+		System.out.println("Hello from lambda");
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("statusCode", 200);
+		resultMap.put("body", "Hello from Lambda");
+		return resultMap;
 	}
+
+//	public Map<String, Object> handleRequest(Object request, Context context) {
+//		context.getLogger().log("SNS Handler invoked");
+//
+//		if (request instanceof Map) {
+//			Map<String, Object> event = (Map<String, Object>) request;
+//
+//			if (event.containsKey("Records")) {
+//				List<Map<String, Object>> records = (List<Map<String, Object>>) event.get("Records");
+//
+//				for (Map<String, Object> record : records) {
+//					Map<String, Object> sns = (Map<String, Object>) record.get("Sns");
+//					String message = (String) sns.get("Message");
+//
+//					context.getLogger().log("Received SNS message: " + message);
+//				}
+//			} else {
+//				context.getLogger().log("No SNS Records found in the event.");
+//			}
+//		} else {
+//			context.getLogger().log("Invalid event format: Expected a Map but received " + request.getClass().getName());
+//		}
+//
+//		Map<String, Object> result = Map.of("status", "success", "message", "SNS message processed successfully");
+//		System.out.println(result);
+//		return result;
+//	}
 }

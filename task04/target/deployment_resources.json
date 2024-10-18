@@ -13,10 +13,15 @@
     "timeout" : 300,
     "subnet_ids" : [ ],
     "security_group_ids" : [ ],
-    "dependencies" : [ ],
-    "event_sources" : [ ],
+    "dependencies" : [ {
+      "resource_name" : "lambda_topic",
+      "resource_type" : "sns_topic"
+    } ],
+    "event_sources" : [ {
+      "resource_type" : "sns_topic_trigger",
+      "target_topic" : "lambda_topic"
+    } ],
     "env_variables" : { },
-    "tags" : { },
     "publish_version" : true,
     "alias" : "learn",
     "logs_expiration" : "${logs_expiration}",
@@ -36,11 +41,18 @@
     "timeout" : 300,
     "subnet_ids" : [ ],
     "security_group_ids" : [ ],
-    "dependencies" : [ ],
-    "event_sources" : [ ],
+    "dependencies" : [ {
+      "resource_name" : "async_queue",
+      "resource_type" : "sqs_queue"
+    } ],
+    "event_sources" : [ {
+      "resource_type" : "sqs_trigger",
+      "target_queue" : "async_queue",
+      "batch_size" : 10,
+      "function_response_types" : [ ]
+    } ],
     "env_variables" : { },
-    "tags" : { },
-    "publish_version" : true,
+    "publish_version" : false,
     "alias" : "learn",
     "logs_expiration" : "${logs_expiration}",
     "snap_start" : "None"
