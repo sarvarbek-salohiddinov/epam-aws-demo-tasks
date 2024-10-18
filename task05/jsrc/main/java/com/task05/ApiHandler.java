@@ -44,10 +44,10 @@ import java.util.UUID;
 		@EnvironmentVariable(key = "target_table", value = "${target_table}")})
 public class ApiHandler implements RequestHandler<Object, Map<String, Object>> {
 	private final AmazonDynamoDB client = AmazonDynamoDBClientBuilder.defaultClient();
-
 	public Map<String, Object> handleRequest(Object request, Context context) {
 		@SuppressWarnings("unchecked")
         Map<String, Object> requestToUse = (Map<String, Object>) request;
+
 		LambdaLogger logger = context.getLogger();
 		logger.log("Incoming request: " + request.toString());
 
@@ -58,7 +58,6 @@ public class ApiHandler implements RequestHandler<Object, Map<String, Object>> {
 
 		String createdTime = Instant.now().toString();
 		logger.log("Created time: " + createdTime);
-
 
 		try {
 			String id = UUID.randomUUID().toString();
