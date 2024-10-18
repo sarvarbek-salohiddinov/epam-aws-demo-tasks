@@ -12,6 +12,9 @@
             "dynamodb:PutItem",
             "dynamodb:Batch*",
             "dynamodb:DeleteItem",
+            "dynamodb:DescribeTable",
+            "dynamodb:CreateTable",
+            "dynamodb:DeleteItem",
             "ssm:PutParameter",
             "ssm:GetParameter",
             "kms:Decrypt"
@@ -26,7 +29,9 @@
     "tags": {}
   },
   "api_handler-role": {
-    "predefined_policies": ["AWSLambdaDynamoDBExecutionRole"],
+    "predefined_policies": [
+      "AWSLambdaDynamoDBExecutionRole"
+    ],
     "principal_service": "lambda",
     "custom_policies": [
       "lambda-basic-execution"
@@ -57,7 +62,7 @@
     "minimum_compression_size": 0,
     "tags": {}
   },
-  "${target_table}": {
+  "Events": {
     "resource_type": "dynamodb_table",
     "hash_key_name": "Id",
     "hash_key_type": "S",
