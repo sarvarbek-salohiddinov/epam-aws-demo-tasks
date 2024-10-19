@@ -56,20 +56,20 @@ public class AuditProducer implements RequestHandler<DynamodbEvent, Map<String, 
 		logger.log("Target table: " + System.getenv("target_table"));
 		logger.log("Config table: " + System.getenv("config_table"));
 
-//		Table auditTable = dynamoDB.getTable(System.getenv("target_table"));
-		Table auditTable = dynamoDB.getTable("Audit");
+		Table auditTable = dynamoDB.getTable(System.getenv("target_table"));
+//		Table auditTable = dynamoDB.getTable("Audit");
 
 //		request.getRecords().forEach(record -> {
 //			if (record.getEventName().equalsIgnoreCase("INSERT"))
-//				handleInsert(record.getDynamodb().getNewImage(), auditTable, logger);
+//				doInsert(record.getDynamodb().getNewImage(), auditTable, logger);
 //			else if (record.getEventName().equalsIgnoreCase("MODIFY"))
-//				handleModify(record.getDynamodb().getOldImage(), record.getDynamodb().getNewImage(), auditTable, logger);
+//				doeModify(record.getDynamodb().getOldImage(), record.getDynamodb().getNewImage(), auditTable, logger);
 //		});
 		for (DynamodbEvent.DynamodbStreamRecord record : request.getRecords()) {
 			if (record.getEventName().equalsIgnoreCase("INSERT")) {
-				handleInsert(record.getDynamodb().getNewImage(), auditTable, logger);
+				doInsert(record.getDynamodb().getNewImage(), auditTable, logger);
 			} else if (record.getEventName().equalsIgnoreCase("MODIFY")) {
-				handleModify(record.getDynamodb().getOldImage(), record.getDynamodb().getNewImage(), auditTable, logger);
+				doeModify(record.getDynamodb().getOldImage(), record.getDynamodb().getNewImage(), auditTable, logger);
 			}
 		}
 
@@ -81,9 +81,9 @@ public class AuditProducer implements RequestHandler<DynamodbEvent, Map<String, 
 		return resultMap;
 	}
 
-	private void handleInsert(Map<String, AttributeValue> newImage,
-							  Table auditTable,
-							  LambdaLogger logger) {
+	private void doInsert(Map<String, AttributeValue> newImage,
+						  Table auditTable,
+						  LambdaLogger logger) {
 		String key = newImage.get("key").getS();
 		int value = Integer.parseInt(newImage.get("value").getN());
 
@@ -97,9 +97,9 @@ public class AuditProducer implements RequestHandler<DynamodbEvent, Map<String, 
 		logger.log("Inserted audit item: " + auditItem.toJSON());
 	}
 
-	private void handleModify(Map<String, AttributeValue> oldImage,
-							  Map<String, AttributeValue> newImage,
-							  Table auditTable, LambdaLogger logger) {
+	private void doeModify(Map<String, AttributeValue> oldImage,
+						   Map<String, AttributeValue> newImage,
+						   Table auditTable, LambdaLogger logger) {
 		String key = newImage.get("key").getS();
 		int newValue = Integer.parseInt(newImage.get("value").getN());
 		int oldValue = Integer.parseInt(oldImage.get("value").getN());
