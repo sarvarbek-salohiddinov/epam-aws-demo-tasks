@@ -56,8 +56,8 @@ public class AuditProducer implements RequestHandler<DynamodbEvent, Map<String, 
 		logger.log("Target table: " + System.getenv("target_table"));
 		logger.log("Config table: " + System.getenv("config_table"));
 
-		Table auditTable = dynamoDB.getTable(System.getenv("target_table"));
-//		Table auditTable = dynamoDB.getTable("Audit");
+//		Table auditTable = dynamoDB.getTable(System.getenv("target_table"));
+		Table auditTable = dynamoDB.getTable("Audit");
 
 //		request.getRecords().forEach(record -> {
 //			if (record.getEventName().equalsIgnoreCase("INSERT"))
