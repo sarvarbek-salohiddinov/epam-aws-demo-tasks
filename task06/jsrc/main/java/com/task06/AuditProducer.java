@@ -29,14 +29,13 @@ import java.util.UUID;
 @LambdaHandler(
 		lambdaName = "audit_producer",
 		roleName = "audit_producer-role",
-		isPublishVersion = true,
 		aliasName = "learn",
 		logsExpiration = RetentionSetting.SYNDICATE_ALIASES_SPECIFIED)
 @LambdaUrlConfig(
 		authType = AuthType.NONE,
 		invokeMode = InvokeMode.BUFFERED)
-@DependsOn(name = "Audit", resourceType = ResourceType.DYNAMODB_TABLE)
 @DependsOn(name = "Configuration", resourceType = ResourceType.DYNAMODB_TABLE)
+@DependsOn(name = "Audit", resourceType = ResourceType.DYNAMODB_TABLE)
 @DynamoDbTriggerEventSource(
 		targetTable = "Configuration",
 		batchSize = 10)
@@ -56,7 +55,8 @@ public class AuditProducer implements RequestHandler<Object, Map<String, Object>
 		logger.log("Target table: " + System.getenv("target_table"));
 		logger.log("Config table: " + System.getenv("config_table"));
 
-		Table auditTable = dynamoDB.getTable(System.getenv("target_table"));
+//		Table auditTable = dynamoDB.getTable(System.getenv("target_table"));
+		Table auditTable = dynamoDB.getTable("Audit");
 
 		req.getRecords().forEach(record -> {
 			if (record.getEventName().equalsIgnoreCase("INSERT"))
@@ -73,7 +73,9 @@ public class AuditProducer implements RequestHandler<Object, Map<String, Object>
 		return resultMap;
 	}
 
-	private void handleInsert(Map<String, AttributeValue> newImage, Table auditTable, LambdaLogger logger) {
+	private void handleInsert(Map<String, AttributeValue> newImage,
+							  Table auditTable,
+							  LambdaLogger logger) {
 		String key = newImage.get("key").getS();
 		int value = Integer.parseInt(newImage.get("value").getN());
 
@@ -84,10 +86,12 @@ public class AuditProducer implements RequestHandler<Object, Map<String, Object>
 								.withMap("newValue", Map.of("key", key, "value", value));
 
 		auditTable.putItem(auditItem);
-		logger.log("Inserted audit item: " + auditItem.toJSON().toString());
+		logger.log("Inserted audit item: " + auditItem.toJSON());
 	}
 
-	private void handleModify(Map<String, AttributeValue> oldImage, Map<String, AttributeValue> newImage, Table auditTable, LambdaLogger logger) {
+	private void handleModify(Map<String, AttributeValue> oldImage,
+							  Map<String, AttributeValue> newImage,
+							  Table auditTable, LambdaLogger logger) {
 		String key = newImage.get("key").getS();
 		int newValue = Integer.parseInt(newImage.get("value").getN());
 		int oldValue = Integer.parseInt(oldImage.get("value").getN());
