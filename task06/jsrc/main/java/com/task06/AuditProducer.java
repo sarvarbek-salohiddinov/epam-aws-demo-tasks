@@ -57,24 +57,14 @@ public class AuditProducer implements RequestHandler<DynamodbEvent, Map<String, 
 		logger.log("Config table: " + System.getenv("config_table"));
 
 		Table auditTable = dynamoDB.getTable(System.getenv("target_table"));
-//		Table auditTable = dynamoDB.getTable("Audit");
-
-//		request.getRecords().forEach(record -> {
-//			if (record.getEventName().equalsIgnoreCase("INSERT"))
-//				doInsert(record.getDynamodb().getNewImage(), auditTable, logger);
-//			else if (record.getEventName().equalsIgnoreCase("MODIFY"))
-//				doeModify(record.getDynamodb().getOldImage(), record.getDynamodb().getNewImage(), auditTable, logger);
-//		});
 		for (DynamodbEvent.DynamodbStreamRecord record : request.getRecords()) {
-			if (record.getEventName().equalsIgnoreCase("INSERT")) {
+			if (record.getEventName().equalsIgnoreCase("INSERT"))
 				doInsert(record.getDynamodb().getNewImage(), auditTable, logger);
-			} else if (record.getEventName().equalsIgnoreCase("MODIFY")) {
+			else if (record.getEventName().equalsIgnoreCase("MODIFY"))
 				doeModify(record.getDynamodb().getOldImage(), record.getDynamodb().getNewImage(), auditTable, logger);
-			}
 		}
 
 		System.out.println("Hello from lambda");
-
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("statusCode", 200);
 		resultMap.put("body", "Hello from Lambda");
@@ -86,13 +76,11 @@ public class AuditProducer implements RequestHandler<DynamodbEvent, Map<String, 
 						  LambdaLogger logger) {
 		String key = newImage.get("key").getS();
 		int value = Integer.parseInt(newImage.get("value").getN());
-
 		Item auditItem = new Item()
 								.withPrimaryKey("id", UUID.randomUUID().toString())
 								.withString("itemKey", key)
 								.withString("modificationTime", Instant.now().toString())
 								.withMap("newValue", Map.of("key", key, "value", value));
-
 		auditTable.putItem(auditItem);
 		logger.log("Inserted audit item: " + auditItem.toJSON());
 	}
@@ -103,7 +91,6 @@ public class AuditProducer implements RequestHandler<DynamodbEvent, Map<String, 
 		String key = newImage.get("key").getS();
 		int newValue = Integer.parseInt(newImage.get("value").getN());
 		int oldValue = Integer.parseInt(oldImage.get("value").getN());
-
 		Item auditItem = new Item()
 								.withPrimaryKey("id", UUID.randomUUID().toString())
 								.withString("itemKey", key)
@@ -111,7 +98,6 @@ public class AuditProducer implements RequestHandler<DynamodbEvent, Map<String, 
 								.withString("updatedAttribute", "value")
 								.withInt("oldValue", oldValue)
 								.withInt("newValue", newValue);
-
 		auditTable.putItem(auditItem);
 		logger.log("Modified audit item: " + auditItem.toJSON());
 	}
