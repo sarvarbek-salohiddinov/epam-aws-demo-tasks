@@ -26,6 +26,7 @@
       "batch_size" : 10
     } ],
     "env_variables" : {
+      "config_table" : "${config_table}",
       "target_table" : "${target_table}",
       "region" : "${region}"
     },

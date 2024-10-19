@@ -41,29 +41,37 @@ import java.util.UUID;
 		batchSize = 10)
 @EnvironmentVariables(
 		value = {@EnvironmentVariable(key = "region", value = "${region}"),
-				 @EnvironmentVariable(key = "target_table", value = "${target_table}"),})
-public class AuditProducer implements RequestHandler<Object, Map<String, Object>> {
+				 @EnvironmentVariable(key = "target_table", value = "${target_table}"),
+				 @EnvironmentVariable(key = "config_table", value = "${config_table}"),
+		})
+public class AuditProducer implements RequestHandler<DynamodbEvent, Map<String, Object>> {
 	private final AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard().build();
 	DynamoDB dynamoDB = new DynamoDB(client);
 
-	public Map<String, Object> handleRequest(Object request, Context context) {
+	public Map<String, Object> handleRequest(DynamodbEvent request, Context context) {
 		LambdaLogger logger = context.getLogger();
-		DynamodbEvent req = (DynamodbEvent)request;
 
-		logger.log("Request: " + req);
+		logger.log("Request: " + request);
 		logger.log("Region: " + System.getenv("region"));
 		logger.log("Target table: " + System.getenv("target_table"));
 		logger.log("Config table: " + System.getenv("config_table"));
 
-//		Table auditTable = dynamoDB.getTable(System.getenv("target_table"));
-		Table auditTable = dynamoDB.getTable("Audit");
+		Table auditTable = dynamoDB.getTable(System.getenv("target_table"));
+//		Table auditTable = dynamoDB.getTable("Audit");
 
-		req.getRecords().forEach(record -> {
-			if (record.getEventName().equalsIgnoreCase("INSERT"))
+//		request.getRecords().forEach(record -> {
+//			if (record.getEventName().equalsIgnoreCase("INSERT"))
+//				handleInsert(record.getDynamodb().getNewImage(), auditTable, logger);
+//			else if (record.getEventName().equalsIgnoreCase("MODIFY"))
+//				handleModify(record.getDynamodb().getOldImage(), record.getDynamodb().getNewImage(), auditTable, logger);
+//		});
+		for (DynamodbEvent.DynamodbStreamRecord record : request.getRecords()) {
+			if (record.getEventName().equalsIgnoreCase("INSERT")) {
 				handleInsert(record.getDynamodb().getNewImage(), auditTable, logger);
-			else if (record.getEventName().equalsIgnoreCase("MODIFY"))
+			} else if (record.getEventName().equalsIgnoreCase("MODIFY")) {
 				handleModify(record.getDynamodb().getOldImage(), record.getDynamodb().getNewImage(), auditTable, logger);
-		});
+			}
+		}
 
 		System.out.println("Hello from lambda");
 
