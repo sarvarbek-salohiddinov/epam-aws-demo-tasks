@@ -31,13 +31,13 @@
             <artifactId>deployment-configuration-annotations</artifactId>
             <version>${syndicate.java.plugin.version}</version>
         </dependency>
-        <dependency>
-            <groupId>uz.weatherforecast</groupId>
-            <artifactId>ewatherforecast</artifactId>
-            <version>1.0.0</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/ewatherforecast.jar</systemPath>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>uz.weatherforecast</groupId>-->
+<!--            <artifactId>ewatherforecast</artifactId>-->
+<!--            <version>1.0.0</version>-->
+<!--            <scope>system</scope>-->
+<!--            <systemPath>${basedir}/lib/ewatherforecast.jar</systemPath>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>
