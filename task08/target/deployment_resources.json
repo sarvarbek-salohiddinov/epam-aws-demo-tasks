@@ -24,5 +24,13 @@
       "auth_type" : "NONE",
       "invoke_mode" : "BUFFERED"
     }
+  },
+  "openmetroclient-layer" : {
+    "name" : "openmetroclient-layer",
+    "runtimes" : [ "java11" ],
+    "resource_type" : "lambda_layer",
+    "deployment_package" : "openmetroclient-layer-assembly.zip",
+    "libraries" : [ "lib/weather-sdk.jar" ],
+    "architectures" : [ "arm64" ]
   }
 }
