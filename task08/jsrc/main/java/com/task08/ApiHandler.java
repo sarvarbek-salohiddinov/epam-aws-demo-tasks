@@ -12,7 +12,6 @@ import com.syndicate.deployment.model.DeploymentRuntime;
 import com.syndicate.deployment.model.RetentionSetting;
 import com.syndicate.deployment.model.lambda.url.AuthType;
 import com.syndicate.deployment.model.lambda.url.InvokeMode;
-import uz.weatherforecast.OpenMetroClient;
 
 import java.util.Map;
 
@@ -20,14 +19,14 @@ import java.util.Map;
 		lambdaName = "api_handler",
 		roleName = "api_handler-role",
 		aliasName = "${lambdas_alias_name}",
+		layers = {"openmetroclient-layer"},
 		logsExpiration = RetentionSetting.SYNDICATE_ALIASES_SPECIFIED)
 @LambdaUrlConfig(
-
 		authType = AuthType.NONE,
 		invokeMode = InvokeMode.BUFFERED)
 @LambdaLayer(
 		layerName = "openmetroclient-layer",
-		libraries = {"lib/ewatherforecast.jar"},
+		libraries = {"lib/task08-1.0.0.jar"},
 		runtime = DeploymentRuntime.JAVA11,
 		architectures = {Architecture.ARM64},
 		artifactExtension = ArtifactExtension.ZIP
