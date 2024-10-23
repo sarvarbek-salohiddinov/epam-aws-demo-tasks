@@ -23,13 +23,13 @@ import java.util.Map;
 @LambdaUrlConfig(
 		authType = AuthType.NONE,
 		invokeMode = InvokeMode.BUFFERED)
-@LambdaLayer(
-		layerName = "openmetroclient-layer",
-		libraries = {"lib/weather-sdk.jar"},
-		runtime = DeploymentRuntime.JAVA11,
-		architectures = {Architecture.ARM64},
-		artifactExtension = ArtifactExtension.ZIP
-)
+//@LambdaLayer(
+//		layerName = "openmetroclient-layer",
+//		libraries = {"lib/weather-sdk.jar"},
+//		runtime = DeploymentRuntime.JAVA11,
+//		architectures = {Architecture.ARM64},
+//		artifactExtension = ArtifactExtension.ZIP
+//)
 public class ApiHandler implements RequestHandler<Map<String, Object>, String> {
 
 	public String handleRequest(Map<String, Object> request, Context context) {

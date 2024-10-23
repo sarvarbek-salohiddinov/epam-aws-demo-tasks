@@ -31,13 +31,6 @@
             <artifactId>deployment-configuration-annotations</artifactId>
             <version>${syndicate.java.plugin.version}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.task08</groupId>-->
-<!--            <artifactId>weather-sdk</artifactId>-->
-<!--            <version>1.0.0</version>-->
-<!--            <scope>system</scope>-->
-<!--            <systemPath>${basedir}/lib/weather-sdk.jar</systemPath>-->
-<!--        </dependency>-->
     </dependencies>
 
     <build>
