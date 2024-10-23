@@ -26,7 +26,7 @@ import java.util.Map;
 		invokeMode = InvokeMode.BUFFERED)
 @LambdaLayer(
 		layerName = "openmetroclient-layer",
-		libraries = {"lib/weather-sdk.jar"},
+		libraries = {"lib/ewatherforecast.jar"},
 		runtime = DeploymentRuntime.JAVA11,
 		architectures = {Architecture.ARM64},
 		artifactExtension = ArtifactExtension.ZIP

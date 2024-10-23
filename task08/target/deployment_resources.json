@@ -30,7 +30,7 @@
     "runtimes" : [ "java11" ],
     "resource_type" : "lambda_layer",
     "deployment_package" : "openmetroclient-layer-assembly.zip",
-    "libraries" : [ "lib/weather-sdk.jar" ],
+    "libraries" : [ "lib/ewatherforecast.jar" ],
     "architectures" : [ "arm64" ]
   }
 }
