@@ -38,7 +38,7 @@ public class ApiHandler implements RequestHandler<Map<String, Object>, String> {
 		LambdaLogger logger = context.getLogger();
 
 		logger.log("Request: " + request.toString());
-		OpenMetroClient client = new OpenMetroClient();
+        OpenMetroClient client = new OpenMetroClient();
 		try {
 			String weatherForecast = client.getWeatherForecast();
 			logger.log("Weather forecast: " + weatherForecast);
