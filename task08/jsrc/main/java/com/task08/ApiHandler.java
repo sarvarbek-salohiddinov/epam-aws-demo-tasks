@@ -22,7 +22,6 @@ import java.util.Map;
 		aliasName = "${lambdas_alias_name}",
 		logsExpiration = RetentionSetting.SYNDICATE_ALIASES_SPECIFIED)
 @LambdaUrlConfig(
-
 		authType = AuthType.NONE,
 		invokeMode = InvokeMode.BUFFERED)
 @LambdaLayer(
