@@ -19,6 +19,7 @@ import com.syndicate.deployment.annotations.lambda.LambdaUrlConfig;
 import com.syndicate.deployment.annotations.resources.DependsOn;
 import com.syndicate.deployment.model.ResourceType;
 import com.syndicate.deployment.model.RetentionSetting;
+import com.syndicate.deployment.model.TracingMode;
 import com.syndicate.deployment.model.lambda.url.AuthType;
 import com.syndicate.deployment.model.lambda.url.InvokeMode;
 
@@ -35,6 +36,7 @@ import java.util.UUID;
 		lambdaName = "processor",
 		roleName = "processor-role",
 		aliasName = "${lambdas_alias_name}",
+		tracingMode = TracingMode.Active,
 		logsExpiration = RetentionSetting.SYNDICATE_ALIASES_SPECIFIED)
 @LambdaUrlConfig(
 		authType = AuthType.NONE,

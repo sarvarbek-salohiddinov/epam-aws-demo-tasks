@@ -22,6 +22,7 @@
       "target_table" : "${target_table}",
       "region" : "${region}"
     },
+    "tracing_mode" : "Active",
     "publish_version" : false,
     "alias" : "${lambdas_alias_name}",
     "logs_expiration" : "${logs_expiration}",
