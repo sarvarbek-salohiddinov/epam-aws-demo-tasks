@@ -76,12 +76,6 @@ public class Processor implements RequestHandler<Map<String, Object>, String> {
 			logger.log("Error processing weather data: " + e.getMessage());
 			return "Failed";
 		}
-
-//		System.out.println("Hello from lambda");
-//		Map<String, Object> resultMap = new HashMap<String, Object>();
-//		resultMap.put("statusCode", 200);
-//		resultMap.put("body", "Hello from Lambda");
-//		return resultMap;
 	}
 
 	private Map<String, Object> parseWeatherData(String weatherJson) throws JsonProcessingException {
@@ -127,8 +121,7 @@ public class Processor implements RequestHandler<Map<String, Object>, String> {
 			String inputLine;
 			StringBuilder content = new StringBuilder();
 
-			while ((inputLine = in.readLine()) != null)
-				content.append(inputLine);
+			while ((inputLine = in.readLine()) != null) content.append(inputLine);
 
 			in.close();
 			connection.disconnect();
