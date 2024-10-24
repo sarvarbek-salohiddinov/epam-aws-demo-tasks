@@ -5,7 +5,6 @@ import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProviderClientBuilder
 import com.amazonaws.services.cognitoidp.model.*;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
-import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.ItemUtils;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
@@ -24,8 +23,6 @@ import com.syndicate.deployment.model.ResourceType;
 import com.syndicate.deployment.model.RetentionSetting;
 import com.syndicate.deployment.model.lambda.url.AuthType;
 import com.syndicate.deployment.model.lambda.url.InvokeMode;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import java.time.LocalTime;
 import java.util.*;
@@ -49,9 +46,6 @@ import java.util.regex.Pattern;
 				 @EnvironmentVariable(key = "reservations_table", value = "${reservations_table}"),
 				 @EnvironmentVariable(key = "booking_userpool", value = "${booking_userpool}")})
 public class ApiHandler implements RequestHandler<Map<String, Object>, Map<String, Object>> {
-//	private static final Log log = LogFactory.getLog(ApiHandler.class);
-	private final AmazonDynamoDB dynamoDBClient = AmazonDynamoDBClientBuilder.defaultClient();
-//	private final DynamoDB dynamoDB = new DynamoDB(dynamoDBClient);
 	private final AWSCognitoIdentityProvider cognitoClient = AWSCognitoIdentityProviderClientBuilder.defaultClient();
 
 	public Map<String, Object> handleRequest(Map<String, Object> request, Context context) {
